@@ -25,7 +25,15 @@ io.on('connection', socket => {
         //send a message to the room that we are currently in 
         //broadcast means send it to everyone else in this room but dont send it back to me
         socket.broadcast.to(roomId).emit('user-connected', userId)
+
+        socket.on('disconnect',  () => {
+            //you can go to another page or do what ever when dissconct 
+            socket.broadcast.to(roomId).emit('user-disconnected', userId )
+            // socket.to(roomId).broadcast.emit('user-disconnected', userId)
+        })
     })
+
+    
 })
 
 server.listen(3000) 
